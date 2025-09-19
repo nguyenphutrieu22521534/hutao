@@ -75,8 +75,20 @@ WSGI_APPLICATION = 'hutao.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db_home',
+        'USER': 'docker',
+        'PASSWORD': 'docker_password',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    },
+    'company': {  # second database
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db_company',
+        'USER': 'docker',
+        'PASSWORD': 'docker_password',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
