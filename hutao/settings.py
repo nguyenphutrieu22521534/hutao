@@ -33,7 +33,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "applications.commons",
     "applications.company.apps.CompanyConfig",
+    "applications.homa",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,7 +81,15 @@ WSGI_APPLICATION = 'hutao.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db_home',
+        'NAME': 'db_default',
+        'USER': 'docker',
+        'PASSWORD': 'docker_password',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    },
+    'homa': {  # second database
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db_homa',
         'USER': 'docker',
         'PASSWORD': 'docker_password',
         'HOST': 'localhost',
@@ -136,3 +146,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Database routing
+DATABASE_ROUTERS = ['hutao.db_routers.DatabaseRouter']
