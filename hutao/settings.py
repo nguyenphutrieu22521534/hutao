@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "my_models.blog.apps.BlogConfig",
     "applications.commons",
     "applications.company.apps.CompanyConfig",
     "applications.homa",
@@ -87,7 +88,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
     },
-    'homa': {  # second database
+    'homa': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_homa',
         'USER': 'root',
@@ -95,9 +96,17 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
     },
-    'company': {  # second database
+    'company': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_company',
+        'USER': 'root',
+        'PASSWORD': 'root_password',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    },
+    'blog': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db_blog',
         'USER': 'root',
         'PASSWORD': 'root_password',
         'HOST': 'localhost',
