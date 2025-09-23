@@ -15,7 +15,10 @@ class DatabaseRouter:
         return None
 
     def allow_relation(self, obj1, obj2, **hints):
+        db_set = {'homa', 'company'}
+        if obj1._state.db in db_set or obj2._state.db in db_set:
             return True
+        return None
 
     def allow_migrate(self, db, app_label, model_name=None, **hints):
         if app_label == 'homa':
