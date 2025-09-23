@@ -10,6 +10,26 @@ class HomaUser(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        abstract = True
+
+class HomaProfile(HomaUser):
+    bio = models.TextField(blank=True, null=True)
+    birth_date = models.DateField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Homa Profile"
+        verbose_name_plural = "Homa Profiles"
+        db_table = 'homa_profiles'
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['email']),
+        ]
+        permissions = [
+            ('can_view_profiles', 'Can view profiles'),
+            ('can_edit_profiles', 'Can edit profiles'),
+        ]
+
 class Product(models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
