@@ -1,0 +1,23 @@
+Mấy fields hay xài:
+
+CharField – chuỗi ngắn (phải có max_length).
+TextField – chuỗi dài.
+IntegerField / FloatField / DecimalField – số.
+BooleanField – True/False.
+DateField / DateTimeField – ngày, ngày+giờ.
+FileField / ImageField – file & ảnh.
+JSONField – dữ liệu JSON.
+AutoField – số tự tăng (ID).
+
+Tùy chọn hay xài:
+
+null=True → cho phép lưu NULL trong DB.
+blank=True → cho phép bỏ trống trong form.
+default=... → giá trị mặc định.
+unique=True → không trùng lặp.
+primary_key=True → khoá chính.
+db_index=True → tạo index.
+verbose_name="Tên hiển thị" → tên dễ đọc.
+help_text="..." → chú thích trong form.
+
+Note: null = DB, blank = Form, nếu cần chuỗi rỗng, dùng blank=True, không nên dùng null=True cho CharField/TextField.
