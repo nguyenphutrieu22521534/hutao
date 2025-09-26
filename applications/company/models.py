@@ -35,9 +35,15 @@ class Department(models.Model):
 auditlog.register(Department)
 
 class Employee(models.Model):
+    GENDER_CHOICES = [
+        ("M", "Male"),
+        ("F", "Female"),
+        ("O", "Other"),
+    ]
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="employee_profile")
     department = models.ForeignKey(Department, on_delete=models.PROTECT, related_name="employees")
     employee_id = models.CharField(max_length=20, unique=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default="O")
 
     def __str__(self):
         return f"{self.user.get_full_name()} ({self.employee_id})"
