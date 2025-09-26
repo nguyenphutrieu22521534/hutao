@@ -33,9 +33,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "applications.commons",
-    "applications.company.apps.CompanyConfig",
-    "applications.homa",
+    'auditlog',
+    'applications.commons',
+    'applications.company.apps.CompanyConfig',
+    'applications.homa',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'auditlog.middleware.AuditlogMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
