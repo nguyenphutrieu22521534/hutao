@@ -5,8 +5,6 @@ class DatabaseRouter:
             return 'homa'
         elif model._meta.app_label == 'company':
             return 'company'
-        elif model._meta.app_label == 'blog':
-            return 'blog'
         return None
 
     def db_for_write(self, model, **hints):
@@ -14,12 +12,10 @@ class DatabaseRouter:
             return 'homa'
         elif model._meta.app_label == 'company':
             return 'company'
-        elif model._meta.app_label == 'blog':
-            return 'blog'
         return None
 
     def allow_relation(self, obj1, obj2, **hints):
-        db_set = {'homa', 'company', 'blog'}
+        db_set = {'homa', 'company'}
         if obj1._state.db in db_set or obj2._state.db in db_set:
             return True
         return None
@@ -29,8 +25,6 @@ class DatabaseRouter:
             return db == 'homa'
         elif app_label == 'company':
             return db == 'company'
-        elif app_label == 'blog':
-            return db == 'blog'
         elif db == 'default':
             # Django admin sử dụng default database
             return True

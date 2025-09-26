@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "my_models.blog.apps.BlogConfig",
     "applications.commons",
     "applications.company.apps.CompanyConfig",
     "applications.homa",
@@ -104,14 +103,6 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
     },
-    'blog': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db_blog',
-        'USER': 'root',
-        'PASSWORD': 'root_password',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
 }
 
 
