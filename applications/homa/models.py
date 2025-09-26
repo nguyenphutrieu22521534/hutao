@@ -14,6 +14,8 @@ class Apartment(models.Model):
     def __str__(self):
         return f"Apartment {self.number} (Floor {self.floor})"
 
+auditlog.register(Apartment)
+
 class Resident(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="resident_profile")
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name="residents")
@@ -26,11 +28,18 @@ class Resident(models.Model):
     def __str__(self):
         return f"{self.user.get_full_name()} - {self.apartment}"
 
-class ElectricityIndicator(models.Model):
-    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name="electricity_indicators")
+auditlog.register(Resident)
+
+class IndicatorBase(models.Model):
     previous_reading = models.PositiveIntegerField()
     current_reading = models.PositiveIntegerField()
     reading_date = models.DateField()
+
+    class Meta:
+        abstract = True
+
+class ElectricityIndicator(IndicatorBase):
+    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name="electricity_indicators")
 
     class Meta:
         ordering = ['-reading_date']
@@ -43,11 +52,10 @@ class ElectricityIndicator(models.Model):
     def usage(self):
         return self.current_reading - self.previous_reading
 
-class WaterIndicator(models.Model):
+auditlog.register(ElectricityIndicator)
+
+class WaterIndicator(IndicatorBase):
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name="water_indicators")
-    previous_reading = models.PositiveIntegerField()
-    current_reading = models.PositiveIntegerField()
-    reading_date = models.DateField()
 
     class Meta:
         ordering = ['-reading_date']
@@ -59,6 +67,8 @@ class WaterIndicator(models.Model):
     @property
     def usage(self):
         return self.current_reading - self.previous_reading
+
+auditlog.register(WaterIndicator)
 
 class Bill(models.Model):
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name="bills")
@@ -73,8 +83,4 @@ class Bill(models.Model):
     def __str__(self):
         return f"Bill - {self.apartment} - {self.billing_period_end}"
 
-auditlog.register(Apartment)
-auditlog.register(Resident)
-auditlog.register(ElectricityIndicator)
-auditlog.register(WaterIndicator)
 auditlog.register(Bill)
