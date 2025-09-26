@@ -1,3 +1,4 @@
+from auditlog.registry import auditlog
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -42,3 +43,11 @@ class Contract(models.Model):
     def __str__(self):
         return f"{self.title} - {self.company.name}"
 
+
+# Register models with auditlog
+
+auditlog.register(Company)
+auditlog.register(Department)
+auditlog.register(Employee)
+auditlog.register(Customer)
+auditlog.register(Contract)
