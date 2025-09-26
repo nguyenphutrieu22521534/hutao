@@ -11,12 +11,28 @@ class Company(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ["name"]
+        verbose_name = "Company"
+        verbose_name_plural = "Companies"
+        db_table = "company"
+
+auditlog.register(Company)
+
 class Department(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="departments")
     name = models.CharField(max_length=120)
 
     def __str__(self):
         return f"{self.name} ({self.company.name})"
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name = "Department"
+        verbose_name_plural = "Departments"
+        db_table = "department"
+
+auditlog.register(Department)
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="employee_profile")
@@ -26,6 +42,14 @@ class Employee(models.Model):
     def __str__(self):
         return f"{self.user.get_full_name()} ({self.employee_id})"
 
+    class Meta:
+        ordering = ["employee_id"]
+        verbose_name = "Employee"
+        verbose_name_plural = "Employees"
+        db_table = "employee"
+
+auditlog.register(Employee)
+
 class Customer(models.Model):
     name = models.CharField(max_length=200)
     email = models.EmailField()
@@ -33,6 +57,14 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name = "Customer"
+        verbose_name_plural = "Customers"
+        db_table = "customer"
+
+auditlog.register(Customer)
 
 class Contract(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="contracts")
@@ -43,11 +75,10 @@ class Contract(models.Model):
     def __str__(self):
         return f"{self.title} - {self.company.name}"
 
+    class Meta:
+        ordering = ["title"]
+        verbose_name = "Contract"
+        verbose_name_plural = "Contracts"
+        db_table = "contract"
 
-# Register models with auditlog
-
-auditlog.register(Company)
-auditlog.register(Department)
-auditlog.register(Employee)
-auditlog.register(Customer)
 auditlog.register(Contract)
