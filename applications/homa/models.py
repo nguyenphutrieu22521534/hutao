@@ -10,23 +10,24 @@ class Apartment(models.Model):
 
     class Meta:
         ordering = ['floor', 'number']
-    
+
     def __str__(self):
         return f"Apartment {self.number} (Floor {self.floor})"
 
 auditlog.register(Apartment)
 
 class Resident(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="resident_profile")
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name="residents")
     phone = models.CharField(max_length=20)
     is_active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['apartment__floor', 'apartment__number']
-    
+
     def __str__(self):
-        return f"{self.user.get_full_name()} - {self.apartment}"
+        return f"{self.name} - {self.apartment}"
 
 auditlog.register(Resident)
 
@@ -44,10 +45,10 @@ class ElectricityIndicator(IndicatorBase):
     class Meta:
         ordering = ['-reading_date']
         unique_together = ['apartment', 'reading_date']
-    
+
     def __str__(self):
         return f"Electricity - {self.apartment} - {self.reading_date}"
-    
+
     @property
     def usage(self):
         return self.current_reading - self.previous_reading
@@ -60,10 +61,10 @@ class WaterIndicator(IndicatorBase):
     class Meta:
         ordering = ['-reading_date']
         unique_together = ['apartment', 'reading_date']
-    
+
     def __str__(self):
         return f"Water - {self.apartment} - {self.reading_date}"
-    
+
     @property
     def usage(self):
         return self.current_reading - self.previous_reading
@@ -79,7 +80,7 @@ class Bill(models.Model):
 
     class Meta:
         ordering = ['-billing_period_end']
-    
+
     def __str__(self):
         return f"Bill - {self.apartment} - {self.billing_period_end}"
 
