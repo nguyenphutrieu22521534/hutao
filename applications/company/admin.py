@@ -23,8 +23,11 @@ class ContractAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     def formatted_value(self, obj):
         return intcomma(obj.value)
     formatted_value.short_description = "Value"
+
     list_display = ['company', 'customer', 'title'] + ["formatted_value"]
     list_filter = ["company", "customer"]
+    list_per_page = 10
+    
 
 admin.site.register(models.Company, CompanyAdmin)
 admin.site.register(models.Department, DepartmentAdmin)
