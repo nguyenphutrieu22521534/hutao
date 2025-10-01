@@ -76,7 +76,7 @@ auditlog.register(Customer)
 class Contract(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="contracts")
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="contracts")
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200,verbose_name="Detail")
     value = models.DecimalField(max_digits=15, decimal_places=2)
 
     def __str__(self):

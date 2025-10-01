@@ -27,7 +27,6 @@ class ContractAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ['company', 'customer', 'title'] + ["formatted_value"]
     list_filter = ["company", "customer"]
     list_per_page = 10
-    
 
 admin.site.register(models.Company, CompanyAdmin)
 admin.site.register(models.Department, DepartmentAdmin)
