@@ -1,7 +1,6 @@
 from django.contrib import admin
 from . import models
 
-# Helper to get all field names
 def get_all_field_names(model):
     return [field.name for field in model._meta.fields]
 
