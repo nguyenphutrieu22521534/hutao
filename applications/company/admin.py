@@ -15,6 +15,7 @@ class EmployeeAdmin(admin.ModelAdmin):
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display = get_all_field_names(models.Customer)
+    search_fields = ["name"]
 
 class ContractAdmin(admin.ModelAdmin):
     list_display = get_all_field_names(models.Contract)
