@@ -1,5 +1,6 @@
 from django.contrib import admin
 from . import models
+from django.contrib.humanize.templatetags.humanize import intcomma
 
 def get_all_field_names(model):
     return [field.name for field in model._meta.fields]
@@ -18,7 +19,11 @@ class CustomerAdmin(admin.ModelAdmin):
     search_fields = ["name"]
 
 class ContractAdmin(admin.ModelAdmin):
-    list_display = get_all_field_names(models.Contract)
+    def formatted_value(self, obj):
+        return intcomma(obj.value)
+    formatted_value.short_description = "Value"
+    list_display = ['company', 'customer', 'title'] + ["formatted_value"]
+    list_filter = ["company", "customer"]
 
 admin.site.register(models.Company, CompanyAdmin)
 admin.site.register(models.Department, DepartmentAdmin)
