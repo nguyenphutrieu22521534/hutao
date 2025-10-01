@@ -50,7 +50,7 @@ class ElectricityIndicator(IndicatorBase):
         return f"Electricity - {self.apartment} - {self.reading_date}"
 
     @property
-    def usage(self):
+    def increase(self):
         return self.current_reading - self.previous_reading
 
 auditlog.register(ElectricityIndicator)
@@ -66,7 +66,7 @@ class WaterIndicator(IndicatorBase):
         return f"Water - {self.apartment} - {self.reading_date}"
 
     @property
-    def usage(self):
+    def increase(self):
         return self.current_reading - self.previous_reading
 
 auditlog.register(WaterIndicator)

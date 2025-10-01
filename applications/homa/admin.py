@@ -11,10 +11,16 @@ class ResidentAdmin(admin.ModelAdmin):
     list_display = get_all_field_names(models.Resident)
 
 class ElectricityIndicatorAdmin(admin.ModelAdmin):
-    list_display = get_all_field_names(models.ElectricityIndicator)
+    list_display = get_all_field_names(models.ElectricityIndicator) + ["increase_display"]
+    def increase_display(self, obj):
+        return obj.increase
+    increase_display.short_description = "Increase"
 
 class WaterIndicatorAdmin(admin.ModelAdmin):
-    list_display = get_all_field_names(models.WaterIndicator)
+    list_display = get_all_field_names(models.WaterIndicator) + ["increase_display"]
+    def increase_display(self, obj):
+        return obj.increase
+    increase_display.short_description = "Increase"
 
 class BillAdmin(admin.ModelAdmin):
     list_display = get_all_field_names(models.Bill)
