@@ -1,6 +1,7 @@
 from django.contrib import admin
 from . import models
 from django.contrib.humanize.templatetags.humanize import intcomma
+from import_export.admin import ImportExportModelAdmin
 
 def get_all_field_names(model):
     return [field.name for field in model._meta.fields]
@@ -18,7 +19,7 @@ class CustomerAdmin(admin.ModelAdmin):
     list_display = get_all_field_names(models.Customer)
     search_fields = ["name"]
 
-class ContractAdmin(admin.ModelAdmin):
+class ContractAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     def formatted_value(self, obj):
         return intcomma(obj.value)
     formatted_value.short_description = "Value"
