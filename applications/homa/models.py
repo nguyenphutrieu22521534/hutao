@@ -72,12 +72,15 @@ class WaterIndicator(IndicatorBase):
 auditlog.register(WaterIndicator)
 
 class Bill(models.Model):
+    STATUS_CHOICES = [
+        ("paid", "Paid"),
+        ("unpaid", "Unpaid"),
+    ]
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name="bills")
     bill_type = models.CharField(max_length=20)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     billing_period_end = models.DateField()
-    status = models.CharField(max_length=20)
-
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="unpaid")
     class Meta:
         ordering = ['-billing_period_end']
 
