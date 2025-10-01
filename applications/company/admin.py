@@ -23,6 +23,7 @@ class ContractAdmin(admin.ModelAdmin):
         return intcomma(obj.value)
     formatted_value.short_description = "Value"
     list_display = ['company', 'customer', 'title'] + ["formatted_value"]
+    list_filter = ["company", "customer"]
 
 admin.site.register(models.Company, CompanyAdmin)
 admin.site.register(models.Department, DepartmentAdmin)
