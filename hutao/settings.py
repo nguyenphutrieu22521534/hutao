@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.humanize',
     'auditlog',
     'applications.commons',
     'applications.company.apps.CompanyConfig',

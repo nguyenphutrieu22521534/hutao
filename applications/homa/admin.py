@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.humanize.templatetags.humanize import intcomma
+
 from . import models
 
 def get_all_field_names(model):
@@ -23,7 +25,10 @@ class WaterIndicatorAdmin(admin.ModelAdmin):
     increase_display.short_description = "Increase"
 
 class BillAdmin(admin.ModelAdmin):
-    list_display = get_all_field_names(models.Bill)
+    def formatted_amount(self, obj):
+        return intcomma(obj.total_amount)
+    formatted_amount.short_description = "Total Amount"
+    list_display = ['apartment', 'bill_type', 'formatted_amount', 'billing_period_end', 'status']
 
 admin.site.register(models.Apartment, ApartmentAdmin)
 admin.site.register(models.Resident, ResidentAdmin)
