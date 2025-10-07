@@ -131,8 +131,8 @@ total_system_value = Contract.objects.aggregate(
     avg=Avg('value'),
     max=Max('value')
 )
-print(f"Tổng giá trị tất cả hợp đồng: {total_system_value['total'] or 0:,.2f} VND")
+print(f"Tổng giá trị tất cả hợp đồng: {total_system_value['total']} VND")
 print(f"Số lượng hợp đồng: {total_system_value['count']}")
-print(f"Giá trị trung bình: {total_system_value['avg'] or 0:,.2f} VND")
-print(f"Hợp đồng lớn nhất: {total_system_value['max'] or 0:,.2f} VND")
+print(f"Giá trị trung bình: {total_system_value['avg']} VND")
+print(f"Hợp đồng lớn nhất: {total_system_value['max']} VND")
 print()
