@@ -120,8 +120,27 @@ for floor in floors_with_residents:
 # Tính tổng phần nước tiêu thụ tăng thêm trong khoảng thời gian
 
 # Tính tổng tiền Bill chia theo bill_type cho Apartment cụ thể
+apartment_number = "A101"  # Thay bằng số apartment có trong DB
+bill_summary = Bill.objects.filter(
+    apartment__number=apartment_number
+).values('bill_type').annotate(
+    total=Sum('total_amount'),
+)
+
+print(f"Apartment: {apartment_number}")
+for item in bill_summary:
+    print(f"- {item['bill_type']}: {item['total']}")
 
 # Lấy Customer có tổng giá trị hợp đồng vượt ngưỡng
+threshold = 1000000  # Ngưỡng 1 triệu
+high_value_customers = Customer.objects.annotate(
+    total_contract_value=Sum('contracts__value')
+).filter(total_contract_value__gt=threshold)
+
+print(f"Ngưỡng: {threshold} VND")
+for customer in high_value_customers:
+    print(f"- {customer.name}: {customer.total_contract_value} VND")
+
 
 # Tính tổng toàn bộ value hợp đồng của hệ thống
 
@@ -135,4 +154,3 @@ print(f"Tổng giá trị tất cả hợp đồng: {total_system_value['total']
 print(f"Số lượng hợp đồng: {total_system_value['count']}")
 print(f"Giá trị trung bình: {total_system_value['avg']} VND")
 print(f"Hợp đồng lớn nhất: {total_system_value['max']} VND")
-print()
