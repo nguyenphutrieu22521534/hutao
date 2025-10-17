@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.humanize',
     'auditlog',
+    'rest_framework',
     'applications.commons',
     'applications.company.apps.CompanyConfig',
     'applications.homa',
