@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang bảo mật - Hutao</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .welcome-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .user-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 2rem;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .user-details {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-bottom: 2rem;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .detail-value {
+            color: #6c757d;
+        }
+        
+        .google-badge {
+            background: #4285f4;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🏢 Hutao</div>
+            <h1 class="welcome-title">Chào mừng bạn!</h1>
+            <div class="user-info">
+                <strong>{{ user.get_full_name|default:user.username }}</strong>
+                {% if is_google_user %}
+                    <span class="google-badge">Google User</span>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="success-message">
+                ✅ Bạn đã đăng nhập thành công! Đây là trang bảo mật chỉ dành cho người dùng đã xác thực.
+            </div>
+            
+            <div class="user-details">
+                <h3>Thông tin tài khoản</h3>
+                <div class="detail-row">
+                    <span class="detail-label">Tên đăng nhập:</span>
+                    <span class="detail-value">{{ user.username }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Email:</span>
+                    <span class="detail-value">{{ user.email|default:"Chưa cập nhật" }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Họ tên:</span>
+                    <span class="detail-value">{{ user.get_full_name|default:"Chưa cập nhật" }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Ngày tham gia:</span>
+                    <span class="detail-value">{{ user.date_joined|date:"d/m/Y H:i" }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Lần đăng nhập cuối:</span>
+                    <span class="detail-value">{{ user.last_login|date:"d/m/Y H:i"|default:"Lần đầu" }}</span>
+                </div>
+                {% if is_google_user %}
+                <div class="detail-row">
+                    <span class="detail-label">Loại tài khoản:</span>
+                    <span class="detail-value">
+                        <span class="google-badge">Google OAuth</span>
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="actions">
+                <a href="{% url 'admin:index' %}" class="btn btn-primary">Quản trị hệ thống</a>
+                <a href="{% url 'logout_view' %}" class="btn btn-danger">Đăng xuất</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
