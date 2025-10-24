@@ -31,4 +31,3 @@ class ContractSerializer(serializers.ModelSerializer):
         model = Contract
         fields = ['id', 'title', 'value', 'company', 'customer']
 
-
