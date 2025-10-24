@@ -1,0 +1,2 @@
+GOOGLE_OAUTH2_CLIENT_ID=your-google-client-id-here
+GOOGLE_OAUTH2_CLIENT_SECRET=your-google-client-secret-here
