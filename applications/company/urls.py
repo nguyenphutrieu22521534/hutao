@@ -19,5 +19,3 @@ router.register(r'contracts', ContractViewSet, basename='contract')
 urlpatterns = [
     path('', include(router.urls)),
 ]
-
-
