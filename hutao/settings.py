@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 from applications import company
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,10 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-)k1=ls4xc3gj$t3ahh4u72khpq$d)uh@38v)4q#(jludy^)^u!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
 # Application definition
 
@@ -45,7 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'import_export',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    
 ]
 
 MIDDLEWARE = [
@@ -56,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'hutao.urls'
@@ -63,6 +69,8 @@ ROOT_URLCONF = 'hutao.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates']
+        ,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -151,3 +159,34 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Database routing
 DATABASE_ROUTERS = ['hutao.db_routers.DatabaseRouter']
+# Django Allauth Configuration
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# Site ID for allauth
+SITE_ID = 1
+
+# Social account providers
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': os.getenv('GOOGLE_OAUTH2_CLIENT_ID', ''),
+            'secret': os.getenv('GOOGLE_OAUTH2_CLIENT_SECRET', ''),
+            'key': ''
+        }
+    }
+}
+
+# Django Allauth settings
+LOGIN_REDIRECT_URL = '/commons/auth/protected/'
+LOGOUT_REDIRECT_URL = '/commons/auth/login/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/commons/auth/login/'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = False

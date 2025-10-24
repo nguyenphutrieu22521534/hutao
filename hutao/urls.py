@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
+from django.shortcuts import redirect
 
 admin.site.site_header = 'Hutao administration'
 admin.site.site_title = 'Hutao Admin'
@@ -23,4 +25,8 @@ admin.site.index_title = 'Hutao site administration'
 urlpatterns = [
 
     path('admin/', admin.site.urls),
+    path('company/', include('applications.company.urls')),
+    path('commons/', include('applications.commons.urls')),
+    path('accounts/', include('allauth.urls')),
+    path('', lambda request: redirect('login_view')),
 ]
